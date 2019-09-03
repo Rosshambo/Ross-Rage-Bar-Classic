@@ -1,0 +1,68 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ../../FrameXML/UI.xsd">
+<Script file="RossRageBarClassic.lua"/>
+  <Frame name="RossRageBarFrame" toplevel="true" enableMouse="true" movable = "true" parent="UIParent" hidden="false" resizable = "true">
+  <Size>
+      <AbsDimension x="125" y="27"/>
+    </Size>
+    <Anchors>
+      <Anchor point="TOPRIGHT" relativeTo="MinimapCluster" relativePoint="BOTTOMLEFT">
+        <Offset>
+          <AbsDimension x="50" y="25"/>
+        </Offset>
+      </Anchor>
+    </Anchors>
+    <TitleRegion/>
+    <Backdrop bgFile="Interface\TutorialFrame\TutorialFrameBackground" edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
+      <EdgeSize>
+        <AbsValue val="16"/>
+      </EdgeSize>
+      <BackgroundInsets>
+        <AbsInset left="5" right="5" top="5" bottom="5"/>
+      </BackgroundInsets>
+    </Backdrop>
+    <Layers>
+      <Layer level="ARTWORK">
+        <FontString name="$parentText" inherits="GameFontNormalSmall" justifyH="CENTER" text="">
+          <Anchors>
+            <Anchor point="CENTER">
+              <Offset>
+                <AbsDimension x="0" y="0"/>
+              </Offset>
+            </Anchor>
+          </Anchors>
+        </FontString>
+      </Layer>
+    </Layers>
+    <Scripts>
+		<OnLoad>
+			RageBar_OnLoad(self);
+			self:SetMinResize(125, 27);
+		</OnLoad>
+	  <OnEvent>
+		RageBar_OnEvent(self, event, ...);
+	  </OnEvent>
+	  <OnEnter>
+		GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+		RageBar_ShowTooltip(self);
+	  </OnEnter>
+      <OnLeave>
+		GameTooltip:Hide();
+	  </OnLeave>
+      <OnMouseDown>
+        if (IsShiftKeyDown()) then
+          self:StartMoving();
+		end
+		if (IsControlKeyDown()) then
+			self:StartSizing()
+		end
+      </OnMouseDown>
+      <OnMouseUp>  self:StopMovingOrSizing(); </OnMouseUp>
+      <OnDragStop> self:StopMovingOrSizing(); </OnDragStop>
+    </Scripts>
+  </Frame>
+  
+  <GameTooltip name="DSCHKTT" frameStrata="TOOLTIP" hidden="true" parent="UIParent" inherits="GameTooltipTemplate"/>
+  
+</Ui>

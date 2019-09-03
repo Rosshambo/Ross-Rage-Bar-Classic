@@ -1,0 +1,5 @@
+## Interface: 11302
+## Title: Ross' Rage Bar Classic
+## Notes: A Movable Rage/Energy/Mana/Runic Power Window
+RossRageBarClassic.lua
+RossRageBarClassic.xml
