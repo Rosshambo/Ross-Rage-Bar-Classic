@@ -1,4 +1,6 @@
 equipmentSet = "";
+ammotSlot = "";
+ammoCount = "";
 t = {[0] = "Mana", [1] = "Rage", [2] = "Focus", [3] = "Energy", [4] = "Happiness", [5] = "Runes", [6] = "Runic Power", [7] = "Soul Shards", [8] = "Eclipse", [9] = "Holy Power"};
 function RageBar_OnLoad(self)
 	self:RegisterEvent("UNIT_POWER_UPDATE");
@@ -23,11 +25,14 @@ function createBar()
 	if (UnitPowerType("player") == 0) then
 		r = string.len(power);
 		RossRageBarFrame:SetSize((r*7)+140, 43);
+		powerText = t[UnitPowerType("player")]..": "..power.." ("..floor((power/UnitPowerMax("player"))*100).."%)";
 		if (playerClass == "Hunter") then
 			ammoSlot = GetInventorySlotInfo("AmmoSlot");
-			ammoCount = GetInventoryItemCount("player", ammoSlot);
+			ammoCount = GetInventoryItemCount("player", ammoSlot)
+			ammoText = "Ammo: "..ammoCount;
+			powerText = powerText.."\n"..ammoText;
 		end
-		RossRageBarFrameText:SetText(t[UnitPowerType("player")]..": "..power.."\n".." ("..floor((power/UnitPowerMax("player"))*100).."%)".."\n".."Ammo: "..ammoCount);
+		RossRageBarFrameText:SetText(powerText);
 		--RossRageBarFrameText:SetText(playerClass);
 		
 	--For Runic Power
@@ -48,13 +53,14 @@ function updateBar()
 	--Only shows percentage if you are using mana, otherwise removes the % and shrinks the window slightly.
 	if (UnitPowerType("player") == 0) then
 		r = string.len(power);
+		powerText = t[UnitPowerType("player")]..": "..power.." ("..floor((power/UnitPowerMax("player"))*100).."%)";
 		if (playerClass == "Hunter") then
 			ammoSlot = GetInventorySlotInfo("AmmoSlot");
-			ammoCount = GetInventoryItemCount("player", ammoSlot);
+			ammoCount = GetInventoryItemCount("player", ammoSlot)
+			ammoText = "Ammo: "..ammoCount;
+			powerText = powerText.."\n"..ammoText;
 		end
-		--RossRageBarFrame:SetSize((r*7)+90, 27);
-		RossRageBarFrameText:SetText(t[UnitPowerType("player")]..": "..power.." ("..floor((power/UnitPowerMax("player"))*100).."%)".."\n".."Ammo: "..ammoCount);
-		--RossRageBarFrameText:SetText(playerClass);
+		RossRageBarFrameText:SetText(powerText);
 
 	--For Runic Power
 	elseif (UnitPowerType("player") == 6) then
