@@ -18,11 +18,18 @@ function RageBar_OnEvent(self, event, ...)
 end
 function createBar()
 	power = UnitPower("player");
+	local playerClass, englishClass = UnitClass("player");
 	--Only shows percentage if you are using mana, otherwise removes the % and shrinks the window slightly.
 	if (UnitPowerType("player") == 0) then
 		r = string.len(power);
 		RossRageBarFrame:SetSize((r*7)+140, 43);
-		RossRageBarFrameText:SetText(t[UnitPowerType("player")]..": "..power.."\n".." ("..floor((power/UnitPowerMax("player"))*100).."%)");
+		if (playerClass == "Hunter") then
+			ammoSlot = GetInventorySlotInfo("AmmoSlot");
+			ammoCount = GetInventoryItemCount("player", ammoSlot);
+		end
+		RossRageBarFrameText:SetText(t[UnitPowerType("player")]..": "..power.."\n".." ("..floor((power/UnitPowerMax("player"))*100).."%)".."\n".."Ammo: "..ammoCount);
+		--RossRageBarFrameText:SetText(playerClass);
+		
 	--For Runic Power
 	elseif (UnitPowerType("player") == 6) then
 		RossRageBarFrame:SetSize(110, 27);
@@ -31,16 +38,24 @@ function createBar()
 	else
 		RossRageBarFrame:SetSize(90, 27);
 		RossRageBarFrameText:SetText(t[UnitPowerType("player")]..": "..power);
+
 	end
 end
 
 function updateBar()
 	power = UnitPower("player");
+	local playerClass, englishClass = UnitClass("player");
 	--Only shows percentage if you are using mana, otherwise removes the % and shrinks the window slightly.
 	if (UnitPowerType("player") == 0) then
 		r = string.len(power);
+		if (playerClass == "Hunter") then
+			ammoSlot = GetInventorySlotInfo("AmmoSlot");
+			ammoCount = GetInventoryItemCount("player", ammoSlot);
+		end
 		--RossRageBarFrame:SetSize((r*7)+90, 27);
-		RossRageBarFrameText:SetText(t[UnitPowerType("player")]..": "..power.." ("..floor((power/UnitPowerMax("player"))*100).."%)");
+		RossRageBarFrameText:SetText(t[UnitPowerType("player")]..": "..power.." ("..floor((power/UnitPowerMax("player"))*100).."%)".."\n".."Ammo: "..ammoCount);
+		--RossRageBarFrameText:SetText(playerClass);
+
 	--For Runic Power
 	elseif (UnitPowerType("player") == 6) then
 		--RossRageBarFrame:SetSize(110, 27);
