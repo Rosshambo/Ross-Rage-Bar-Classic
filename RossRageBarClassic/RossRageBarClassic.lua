@@ -11,13 +11,12 @@ end
 --Handles the event fired whenever the players "power" changes.
 function RageBar_OnEvent(self, event, ...)
 	if (event == "UNIT_POWER_UPDATE") then
-		--createBar();
 		updateBar();
 	elseif (event == "PLAYER_LOGIN") then
-		--createBar();
 		updateBar();
 	end
 end
+
 function createBar()
 	power = UnitPower("player");
 	local playerClass, englishClass = UnitClass("player");
@@ -33,8 +32,6 @@ function createBar()
 			powerText = powerText.."\n"..ammoText;
 		end
 		RossRageBarFrameText:SetText(powerText);
-		--RossRageBarFrameText:SetText(playerClass);
-		
 	--For Runic Power
 	elseif (UnitPowerType("player") == 6) then
 		RossRageBarFrame:SetSize(110, 27);
@@ -43,8 +40,25 @@ function createBar()
 	else
 		RossRageBarFrame:SetSize(90, 27);
 		RossRageBarFrameText:SetText(t[UnitPowerType("player")]..": "..power);
-
 	end
+	createBackdrop();
+end
+
+--Create the backdrop for the window
+--TODO: Make this a setting to turn off and on
+function createBackdrop()
+	RossRageBarFrame:SetBackdrop({
+		bgFile = "interface/tutorialframe/tutorialframebackground.blp", 
+		edgeFile = "interface/tooltips/ui-tooltip-border.blp", 
+		tile = "true",
+		edgeSize = 8,
+		insets = { 
+			left = 2,
+			right = 2,
+			top = 2, 
+			bottom = 2 
+		}
+	})
 end
 
 function updateBar()
@@ -61,14 +75,11 @@ function updateBar()
 			powerText = powerText.."\n"..ammoText;
 		end
 		RossRageBarFrameText:SetText(powerText);
-
 	--For Runic Power
 	elseif (UnitPowerType("player") == 6) then
-		--RossRageBarFrame:SetSize(110, 27);
 		RossRageBarFrameText:SetText(t[UnitPowerType("player")]..": "..power);
 	--For rage and energy
 	else
-		--RossRageBarFrame:SetSize(90, 27);
 		RossRageBarFrameText:SetText(t[UnitPowerType("player")]..": "..power);
 	end
 end

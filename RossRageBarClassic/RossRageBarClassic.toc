@@ -1,5 +1,6 @@
-## Interface: 20501
+## Interface: 30400
 ## Title: Ross' Rage Bar Classic
 ## Notes: A Movable Rage/Energy/Mana/Runic Power Window
+## SavedVariablesPerCharacter: ShowBackdrop
 RossRageBarClassic.lua
 RossRageBarClassic.xml
